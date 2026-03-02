@@ -1,0 +1,29 @@
+# 1. 前端依赖与打包产物
+frontend/node_modules/
+frontend/dist/
+frontend/.npm/
+
+# 2. 后端缓存与虚拟环境
+backend/__pycache__/
+backend/*.pyc
+backend/.venv/
+backend/venv/
+backend/alembic/versions/*
+
+# 3. 绝密用户数据与上传文件 (极其重要！)
+uploads/
+backend/uploads/
+db/data/      # 假设您的 PostgreSQL 数据映射到了本地
+*.sqlite3
+
+# 4. 环境变量与私钥
+.env
+.env.*
+*.pem
+*.key
+
+# 5. 操作系统与编辑器缓存
+.DS_Store
+.vscode/
+.idea/
+*.log
