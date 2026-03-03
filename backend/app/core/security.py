@@ -3,10 +3,8 @@ import jwt
 from datetime import datetime, timedelta, timezone
 from passlib.context import CryptContext
 
-# 配置 bcrypt 密码加密器
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-# 💡 直接从环境变量读取，找不到时给个默认值防崩
 SECRET_KEY = os.getenv("SECRET_KEY", "fallback_secret_key")
 ALGORITHM = os.getenv("ALGORITHM", "HS256")
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 10080))

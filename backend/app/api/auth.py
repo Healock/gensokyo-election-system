@@ -16,7 +16,7 @@ from app.api.deps import get_current_user
 router = APIRouter()
 
 # ==========================================
-# 📦 Pydantic 接收模型统一放在顶部
+# Pydantic 接收模型
 # ==========================================
 class AvatarUpdate(BaseModel):
     avatar_url: str
@@ -26,7 +26,7 @@ class PasswordChange(BaseModel):
     new_password: str
 
 # ==========================================
-# 🚀 路由接口区
+# 路由接口
 # ==========================================
 
 @router.post("/register", response_model=MemberResponse)
@@ -124,7 +124,6 @@ async def upload_my_avatar(file: UploadFile = File(...), current_user: Member = 
         raise HTTPException(status_code=400, detail="只能上传图片文件！")
         
     file_bytes = await file.read()
-    # 调用我们的压缩引擎
     file_url = compress_and_save_image(file_bytes, file.filename)
     
     current_user.avatar_url = file_url

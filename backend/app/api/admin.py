@@ -12,7 +12,6 @@ from app.api.deps import get_admin_user
 
 router = APIRouter()
 
-# 接收修改密码的请求体
 class PasswordReset(BaseModel):
     new_password: str
 

@@ -51,6 +51,8 @@ services:
     volumes:
       - ./frontend:/app
       - /app/node_modules
-
+    environment:
+      - DOMAIN_NAME=${DOMAIN_NAME}
+      
 volumes:
   pg_data:

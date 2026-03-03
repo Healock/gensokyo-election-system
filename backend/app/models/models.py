@@ -51,5 +51,4 @@ class ChatMessage(Base):
     content = Column(Text, nullable=False)
     created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
 
-    # 关联发送者，方便查询头像和名字
     sender = relationship("Member")

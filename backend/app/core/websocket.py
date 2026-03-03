@@ -24,5 +24,4 @@ class ConnectionManager:
         for dead_conn in dead_connections:
             self.active_connections.discard(dead_conn)
 
-# 在这里实例化全局的广播中心
 manager = ConnectionManager()

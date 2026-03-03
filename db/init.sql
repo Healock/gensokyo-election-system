@@ -1,15 +1,12 @@
--- 幻想乡委员会选举系统 - 终极 Schema (2026-03 版)
--- 包含：头像支持、注册审核、管理员标记、级联删除
-
 -- 1. 委员表 (Members)
 CREATE TABLE members (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    username VARCHAR(50) UNIQUE NOT NULL,      
-    password_hash VARCHAR(255) NOT NULL,       
-    avatar_url TEXT,                           -- 👈 新增：本地压缩头像路径或网络链接
-    is_current_chairman BOOLEAN DEFAULT FALSE, 
-    is_admin BOOLEAN DEFAULT FALSE,            -- 👈 管理员标记
-    is_approved BOOLEAN DEFAULT FALSE,         -- 👈 注册审核标记
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    avatar_url TEXT,
+    is_current_chairman BOOLEAN DEFAULT FALSE,
+    is_admin BOOLEAN DEFAULT FALSE,
+    is_approved BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -17,7 +14,7 @@ CREATE TABLE members (
 CREATE TABLE elections (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     year_month VARCHAR(10) UNIQUE NOT NULL,    -- 例：'2026-03'
-    status VARCHAR(20) NOT NULL DEFAULT 'pending', -- pending, active, completed, archived
+    status VARCHAR(20) NOT NULL DEFAULT 'pending',
     winner_id UUID REFERENCES members(id) ON DELETE SET NULL, 
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );

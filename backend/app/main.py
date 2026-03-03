@@ -15,17 +15,15 @@ from app.core.websocket import manager
 app = FastAPI(
     title="幻想乡委员会选举系统 API",
     description="管理每月最后一天举行的 4 轮淘汰制选举",
-    version="1.0.0"
+    version="0.1.2"
 )
 
-# 💡 新增：挂载本地上传目录，使得图片可以通过 URL 直接访问
 os.makedirs("uploads/avatars", exist_ok=True)
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 
-# 允许跨域请求（方便前端 8004 端口调用）
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # 生产环境建议改为 ["http://localhost:8004", "您的服务器IP:8004"]
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -43,7 +41,6 @@ async def root():
 @app.get("/api/health")
 async def health_check(db: AsyncSession = Depends(get_db)):
     try:
-        # 尝试执行一个最简单的 SQL 查询来验证连接
         result = await db.execute(text("SELECT 1"))
         value = result.scalar()
         return {"status": "ok", "db_connected": True, "test_query": value}
@@ -55,8 +52,6 @@ async def websocket_endpoint(websocket: WebSocket):
     await manager.connect(websocket)
     try:
         while True:
-            # 在这个业务场景下，前端主要是接收广播，很少通过 WS 发消息给后端。
-            # 但为了保持连接活跃，我们可以接收前端发来的心跳包 (ping)
             data = await websocket.receive_text()
             if data == "ping":
                 await websocket.send_text("pong")
