@@ -193,24 +193,19 @@ const authMode = ref('login');
 const activeMainTab = ref('vote'); 
 const activeAdminTab = ref('election'); 
 
-// 💡 页面高度平滑过渡的专属状态与方法
 const containerHeight = ref('auto');
 
 const onBeforeLeave = (el) => {
-  // 1. 切换瞬间，先把外层卡片的高度“死死锁住”在老页面的高度
   containerHeight.value = el.offsetHeight + 'px';
 };
 
 const onEnter = (el) => {
-  // 2. 新老页面同时存在的瞬间，新页面的高度就是我们的目标高度
-  // 用 nextTick 等待 Vue 把 DOM 挂载好，然后触发外层卡片的拉伸/收缩
   nextTick(() => {
     containerHeight.value = el.offsetHeight + 'px';
   });
 };
 
 const onAfterEnter = (el) => {
-  // 3. 动画播完，老页面已被销毁，重置为 auto 恢复自由身
   containerHeight.value = 'auto';
 };
 
@@ -502,12 +497,11 @@ onUnmounted(() => {
   transform: scale(0.8) translateY(20px);
 }
 
-/* 💡 内容浮现同步使用果冻回弹曲线，时间设为 0.5s 配合外壳 */
 .tab-fade-enter-active, .tab-fade-leave-active {
   transition: opacity 0.5s cubic-bezier(0.25, 1, 0.265, 1.15), 
               transform 0.5s cubic-bezier(0.25, 1, 0.265, 1.15);
 }
-/* 🚀 最核心的魔法：让正在消失的老页面脱离文档流，悬浮在原地，这样新老页面就能完美重叠！ */
+
 .tab-fade-leave-active {
   position: absolute;
   top: 0;
