@@ -19,6 +19,9 @@ db/data/      # 假设您的 PostgreSQL 数据映射到了本地
 # 4. 环境变量与私钥
 .env
 .env.*
+
+!.env.example
+
 *.pem
 *.key
 
